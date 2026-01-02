@@ -1,9 +1,11 @@
+name: Render GIFs
+
 on:
   push:
     branches: [main]
+  workflow_dispatch:
   schedule:
     - cron: "0 0 * * *"
-  workflow_dispatch:
 
 permissions:
   # Give the default GITHUB_TOKEN write permission to commit and push the
@@ -14,31 +16,69 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-name: Render GIFs
+
 jobs:
   render:
-    name: Render video
+    name: Render GitHub Stats GIF
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@main
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@main
-
-      - run: sudo apt update
-
-      - run: sudo apt install ffmpeg
-
-      - name: Run install
-        uses: borales/actions-yarn@v5
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          cmd: install
+          node-version: 18
+          cache: yarn
 
-      - name: Render Video
-        uses: borales/actions-yarn@v5
-        with:
-          cmd: render
+      - name: Install ffmpeg
+        run: |
+          sudo apt update
+          sudo apt install -y ffmpeg
 
-      - name: Auto commit
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Download stats JSON
+        run: |
+          curl -o stats.json https://raw.githubusercontent.com/DevilStudio27/devilstudio27-github-stats/main/github-user-stats.json
+
+      - name: Render GIF with Remotion
+        run: |
+          npx remotion render \
+            src/index.ts \
+            GitHubStats \
+            out/github-stats.gif \
+            --codec=gif \
+            --props=stats.json \
+            --width=1280 \
+            --height=400 \
+            --fps=30
+
+      - name: Commit generated GIF
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Update gifs"
+          commit_message: "Update GitHub stats GIF"
+          file_pattern: out/*.gif
+    
+    
+    # name: Render video
+    # runs-on: ubuntu-latest
+    # steps:
+    #   - uses: actions/checkout@main
+    #   - uses: actions/setup-node@main
+    #   - run: sudo apt update
+    #   - run: sudo apt install ffmpeg
+    #   - name: Run install
+    #     uses: borales/actions-yarn@v5
+    #     with:
+    #       cmd: install
+    #   - name: Render Video
+    #     uses: borales/actions-yarn@v5
+    #     with:
+    #       cmd: render
+    #   - name: Auto commit
+    #     uses: stefanzweifel/git-auto-commit-action@v5
+    #     with:
+    #       commit_message: "Update gifs"
