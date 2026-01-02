@@ -49,7 +49,7 @@ jobs:
           npx remotion render \
             src/index.ts \
             GitHubRemotionStats \
-            out/github-stats.gif \
+            out/my-readme-stats.gif \
             --codec=gif \
             --props=stats.json \
             --width=1280 \
