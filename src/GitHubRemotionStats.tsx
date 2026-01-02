@@ -20,6 +20,66 @@ const StarIcon = () => (
 );
 
 // Similarly, define ForkIcon, CommitIcon, PullRequestIcon, IssueOpenIcon, IssueClosedIcon, RepoViewIcon, LinesChangedIcon, ContributionsIcon
+// Dummy icon components (replace with real SVGs)
+
+const ForkIcon = () => (
+  <svg height="20" width="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+    <circle cx="18" cy="18" r="3" />
+    <circle cx="6" cy="6" r="3" />
+    <path d="M6 9v6a3 3 0 003 3h6" />
+  </svg>
+);
+
+const CommitIcon = () => (
+  <svg height="20" width="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="3" />
+    <path d="M12 3v3m0 12v3" />
+  </svg>
+);
+
+const PullRequestIcon = () => (
+  <svg height="20" width="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+    <circle cx="18" cy="18" r="3" />
+    <circle cx="6" cy="6" r="3" />
+    <path d="M13 6h3a2 2 0 012 2v7" />
+    <path d="M10 17l4-4-4-4" />
+  </svg>
+);
+
+const IssueOpenIcon = () => (
+  <svg height="20" width="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="10" />
+    <line x1="12" y1="8" x2="12" y2="12" />
+    <line x1="12" y1="16" x2="12" y2="16" />
+  </svg>
+);
+
+const IssueClosedIcon = () => (
+  <svg height="20" width="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+    <path d="M20 6L9 17l-5-5" />
+  </svg>
+);
+
+const RepoViewIcon = () => (
+  <svg height="20" width="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+    <circle cx="12" cy="12" r="3" />
+  </svg>
+);
+
+const LinesChangedIcon = () => (
+  <svg height="20" width="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+    <path d="M4 4h16M4 12h16M4 20h16" />
+  </svg>
+);
+
+const ContributionsIcon = () => (
+  <svg height="20" width="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+    <path d="M20 6v6a2 2 0 01-2 2h-6" />
+    <path d="M8 18H4v-4" />
+    <circle cx="18" cy="18" r="3" />
+  </svg>
+);
 
 interface Stats {
   stars?: number;
@@ -148,64 +208,3 @@ const labelMap: Record<keyof Stats, string> = {
   linesChanged: "Lines of code changed",
   contributions: "Total contributions",
 };
-
-// Dummy icon components (replace with real SVGs)
-
-const ForkIcon = () => (
-  <svg height="20" width="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-    <circle cx="18" cy="18" r="3" />
-    <circle cx="6" cy="6" r="3" />
-    <path d="M6 9v6a3 3 0 003 3h6" />
-  </svg>
-);
-
-const CommitIcon = () => (
-  <svg height="20" width="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-    <circle cx="12" cy="12" r="3" />
-    <path d="M12 3v3m0 12v3" />
-  </svg>
-);
-
-const PullRequestIcon = () => (
-  <svg height="20" width="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-    <circle cx="18" cy="18" r="3" />
-    <circle cx="6" cy="6" r="3" />
-    <path d="M13 6h3a2 2 0 012 2v7" />
-    <path d="M10 17l4-4-4-4" />
-  </svg>
-);
-
-const IssueOpenIcon = () => (
-  <svg height="20" width="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-    <circle cx="12" cy="12" r="10" />
-    <line x1="12" y1="8" x2="12" y2="12" />
-    <line x1="12" y1="16" x2="12" y2="16" />
-  </svg>
-);
-
-const IssueClosedIcon = () => (
-  <svg height="20" width="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-    <path d="M20 6L9 17l-5-5" />
-  </svg>
-);
-
-const RepoViewIcon = () => (
-  <svg height="20" width="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-    <circle cx="12" cy="12" r="3" />
-  </svg>
-);
-
-const LinesChangedIcon = () => (
-  <svg height="20" width="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-    <path d="M4 4h16M4 12h16M4 20h16" />
-  </svg>
-);
-
-const ContributionsIcon = () => (
-  <svg height="20" width="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-    <path d="M20 6v6a2 2 0 01-2 2h-6" />
-    <path d="M8 18H4v-4" />
-    <circle cx="18" cy="18" r="3" />
-  </svg>
-);
