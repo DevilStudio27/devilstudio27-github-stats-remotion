@@ -48,7 +48,7 @@ jobs:
         run: |
           npx remotion render \
             src/index.ts \
-            GitHubStats \
+            GitHubRemotionStats \
             out/github-stats.gif \
             --codec=gif \
             --props=stats.json \
