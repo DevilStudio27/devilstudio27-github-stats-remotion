@@ -4,6 +4,7 @@ import './style.css';
 import {getUserStats} from './functions/setup';
 import {Config, MainProps, mainSchema} from './config';
 import {defaultStats} from './defaultStats';
+import { GitHubRemotionStats } from './GitHubRemotionStats';
 import {Card} from './components/Effects/Card';
 import {cards} from './components/Cards';
 
@@ -26,26 +27,17 @@ export const RemotionRoot = () => {
 
 	return (
 		<>
-			{cards.map(({id, component: Component, height, width = 500}) => (
-				<Composition
-					key={id}
-					id={id}
-					component={(props) => (
-						<Card userStats={props.userStats}>
-							<Component userStats={props.userStats} />
-						</Card>
-					)}
-					durationInFrames={DurationInFrames}
-					fps={FPS}
-					width={width}
-					height={height}
-					schema={mainSchema}
-					calculateMetadata={calculateMetadata}
-					defaultProps={{
-						userStats: defaultStats,
-					}}
-				/>
-			))}
-		</>
+      <Composition
+        id="GitHubRemotionStats"
+        component={GitHubRemotionStats}
+        durationInFrames={300}
+        fps={30}
+        width={1280}
+        height={400}
+        defaultProps={{
+          stats: null,
+        }}
+      />
+    </>
 	);
 };
