@@ -1,12 +1,16 @@
-import React from 'react';
-import {AbsoluteFill, Img, useCurrentFrame, interpolate, spring} from 'remotion';
+import React from "react";
+import {AbsoluteFill, useCurrentFrame, interpolate, spring} from "remotion";
 
 interface Stats {
-  totalCommits?: number;
-  totalPRs?: number;
-  totalIssues?: number;
-  totalRepos?: number;
-  followers?: number;
+  stars?: number;
+  forks?: number;
+  commits?: number;
+  pullRequests?: number;
+  openedIssues?: number;
+  closedIssues?: number;
+  repoViews?: number;
+  linesChanged?: number;
+  contributions?: number;
   [key: string]: any;
 }
 
@@ -14,79 +18,100 @@ interface Props {
   stats: Stats | null;
 }
 
+const iconMap: Record<string, string> = {
+  stars: "⭐",
+  forks: "🍴",
+  commits: "📝",
+  pullRequests: "🔀",
+  openedIssues: "⬆️",
+  closedIssues: "⬇️",
+  repoViews: "📡",
+  linesChanged: "➕",
+  contributions: "🤝",
+};
+
 export const GitHubRemotionStats: React.FC<Props> = ({ stats }) => {
   const frame = useCurrentFrame();
-
-  // Smooth fade-in animation
-  const fade = spring({
-    fps: 30,
-    frame,
-    from: 0,
-    to: 1,
-    durationInFrames: 30,
-  });
-
-  // Optional: small pop-in scale effect
-  const scale = interpolate(frame, [0, 15], [0.8, 1], { extrapolateRight: 'clamp' });
+  const fade = spring({ fps: 30, frame, from: 0, to: 1, durationInFrames: 40 });
 
   return (
     <AbsoluteFill
       style={{
-        backgroundColor: '#0d1117', // GitHub dark background
-        color: '#c9d1d9', // text color
-        fontFamily: 'Inter, sans-serif',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 40,
-        fontSize: 40,
-        transform: `scale(${scale})`,
+        backgroundColor: "#161b22",
+        borderRadius: 30,
+        padding: 30,
+        fontFamily: "'JetBrains Mono', monospace",
+        color: "#c9d1d9",
+        fontSize: 30,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
         opacity: fade,
+        overflow: "hidden",
       }}
     >
-      <h1 style={{margin: 0, fontSize: 60}}>GitHub Stats</h1>
+      {/* Left stats list */}
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 12 }}>
+        <div style={{display: "flex", alignItems: "center", gap: 15, marginBottom: 20}}>
+          <img
+            src="https://github.com/DevilStudio27.png"
+            alt="avatar"
+            style={{ width: 70, height: 70, borderRadius: "50%" }}
+          />
+          <span style={{fontSize: 40}}>Hi, I'm DevilStudio27</span>
+        </div>
 
-      <div style={{display: 'flex', gap: 50, marginTop: 40}}>
-        <StatCard label="Commits" value={stats?.totalCommits ?? 0} />
-        <StatCard label="PRs" value={stats?.totalPRs ?? 0} />
-        <StatCard label="Issues" value={stats?.totalIssues ?? 0} />
-        <StatCard label="Repos" value={stats?.totalRepos ?? 0} />
-        <StatCard label="Followers" value={stats?.followers ?? 0} />
+        {[
+          ["stars", "Stars"],
+          ["forks", "Forks"],
+          ["commits", "Commits"],
+          ["pullRequests", "Pull Requests"],
+          ["openedIssues", "Opened Issues"],
+          ["closedIssues", "Closed Issues"],
+          ["repoViews", "Repo Views (2 wks)"],
+          ["linesChanged", "Lines of code changed"],
+          ["contributions", "Total contributions"],
+        ].map(([key, label]) => (
+          <div
+            key={key}
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              fontVariantNumeric: "tabular-nums",
+              width: "100%",
+            }}
+          >
+            <span>
+              <span style={{ marginRight: 8 }}>{iconMap[key as keyof typeof iconMap]}</span>
+              {label}:
+            </span>
+            <span>{stats?.[key as keyof Stats]?.toLocaleString() ?? 0}</span>
+          </div>
+        ))}
       </div>
+
+      {/* Right vertical light streak */}
+      <div
+        style={{
+          width: 40,
+          marginLeft: 20,
+          borderRadius: 20,
+          background:
+            "linear-gradient(180deg, rgba(54,93,172,0.7) 0%, rgba(54,93,172,0.3) 30%, rgba(255,194,158,0.8) 60%, rgba(255,194,158,0.3) 100%)",
+          filter: "blur(10px)",
+          animation: "twist 5s linear infinite",
+        }}
+      />
+
+      {/* Add keyframes inside a style tag or global CSS */}
+      <style>
+        {`
+          @keyframes twist {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-100%) rotate(360deg); }
+          }
+        `}
+      </style>
     </AbsoluteFill>
-  );
-};
-
-interface StatCardProps {
-  label: string;
-  value: number;
-}
-
-const StatCard: React.FC<StatCardProps> = ({ label, value }) => {
-  const frame = useCurrentFrame();
-
-  // Slide-in animation for each card
-  const translateX = interpolate(frame, [0, 30], [100, 0], { extrapolateRight: 'clamp' });
-  const fade = interpolate(frame, [0, 30], [0, 1], { extrapolateRight: 'clamp' });
-
-  return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        padding: 20,
-        borderRadius: 20,
-        backgroundColor: '#161b22',
-        boxShadow: '0 0 20px rgba(0,0,0,0.5)',
-        transform: `translateX(${translateX}px)`,
-        opacity: fade,
-        minWidth: 120,
-      }}
-    >
-      <span style={{fontSize: 50, fontWeight: 'bold'}}>{value}</span>
-      <span style={{fontSize: 20, color: '#8b949e', marginTop: 5}}>{label}</span>
-    </div>
   );
 };
